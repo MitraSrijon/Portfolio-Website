@@ -7,47 +7,71 @@ export function CertificationsSection() {
   return (
     <section
       id="certifications"
-      className="py-20 md:py-28 px-6 md:px-12 lg:px-16"
+      className="py-20 md:py-28 px-6 md:px-12 lg:px-16 bg-card/30"
       data-testid="section-certifications"
     >
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl md:text-4xl font-semibold text-foreground mb-4" data-testid="text-certifications-title">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2
+            className="font-heading text-3xl md:text-4xl font-semibold text-foreground mb-4"
+            data-testid="text-certifications-title"
+          >
             Certifications
           </h2>
+
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Professional certifications and credentials
+            Certifications and credentials I've earned
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" data-testid="certifications-grid">
+        {/* Certifications */}
+        <div
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          data-testid="certifications-grid"
+        >
           {certifications.map((cert) => (
             <Card
               key={cert.id}
-              className="hover-elevate transition-all duration-300 overflow-visible"
+              className="group hover-elevate transition-all duration-300 overflow-visible"
               data-testid={`card-certification-${cert.id}`}
             >
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-lg bg-primary/10 shrink-0">
+                  {/* Icon */}
+                  <div className="p-3 rounded-lg bg-primary/10 shrink-0 transition-colors group-hover:bg-primary/15">
                     <Award className="h-6 w-6 text-primary" />
                   </div>
+
+                  {/* Details */}
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-heading text-base font-semibold text-foreground leading-tight mb-1" data-testid={`text-cert-name-${cert.id}`}>
+                    <h3
+                      className="font-heading text-base font-semibold text-foreground leading-tight mb-2"
+                      data-testid={`text-cert-name-${cert.id}`}
+                    >
                       {cert.name}
                     </h3>
-                    <p className="text-sm text-muted-foreground mb-2" data-testid={`text-cert-provider-${cert.id}`}>
+
+                    <p
+                      className="text-sm text-primary font-medium mb-2"
+                      data-testid={`text-cert-provider-${cert.id}`}
+                    >
                       {cert.provider}
                     </p>
+
                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                       <Calendar className="h-3.5 w-3.5" />
-                      <span data-testid={`text-cert-year-${cert.id}`}>{cert.year}</span>
+
+                      <span data-testid={`text-cert-year-${cert.id}`}>
+                        {cert.year}
+                      </span>
                     </div>
                   </div>
                 </div>
 
+                {/* Credential */}
                 {cert.credentialUrl && (
-                  <div className="mt-4 pt-4 border-t border-border">
+                  <div className="mt-5 pt-4 border-t border-border">
                     <Button
                       size="sm"
                       variant="ghost"

@@ -4,7 +4,9 @@ import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
 export const users = pgTable("users", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
 });
@@ -19,7 +21,9 @@ export type User = typeof users.$inferSelect;
 
 // Contact form submissions
 export const contactMessages = pgTable("contact_messages", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: varchar("id")
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
   email: text("email").notNull(),
   subject: text("subject").notNull(),
@@ -27,7 +31,9 @@ export const contactMessages = pgTable("contact_messages", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const insertContactMessageSchema = createInsertSchema(contactMessages).omit({
+export const insertContactMessageSchema = createInsertSchema(
+  contactMessages,
+).omit({
   id: true,
   createdAt: true,
 });
@@ -38,7 +44,13 @@ export type ContactMessage = typeof contactMessages.$inferSelect;
 // Analytics event types (in-memory on server)
 export interface AnalyticsEvent {
   id: string;
-  type: "page_view" | "section_view" | "button_click" | "resume_download" | "project_view" | "blog_view" | "link_click";
+  type:
+    | "page_view"
+    | "section_view"
+    | "button_click"
+    | "resume_download"
+    | "project_view"
+    | "link_click";
   label: string;
   metadata?: Record<string, string>;
   timestamp: Date;
@@ -82,7 +94,6 @@ export interface Project {
   category: "software" | "design" | "both";
   demoUrl?: string;
   githubUrl?: string;
-  caseStudyUrl?: string;
   imageUrl?: string;
 }
 
@@ -97,7 +108,7 @@ export interface Certification {
 export interface SocialLinks {
   linkedin?: string;
   github?: string;
-  instagram?: string;
+  leetcode?: string;
   email?: string;
   phone?: string;
 }
@@ -109,26 +120,4 @@ export interface Testimonial {
   company: string;
   quote: string;
   imageUrl?: string;
-}
-
-export interface BlogPost {
-  id: string;
-  slug: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  category: string;
-  publishedAt: string;
-  readTime: string;
-  tags: string[];
-}
-
-export interface CaseStudy {
-  projectId: string;
-  overview: string;
-  problem: string;
-  solution: string;
-  process: string[];
-  results: string[];
-  lessons: string[];
 }

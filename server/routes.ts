@@ -3,9 +3,19 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactMessageSchema } from "@shared/schema";
 import { z } from "zod";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const insertAnalyticsEventSchema = z.object({
-  type: z.enum(["page_view", "section_view", "button_click", "resume_download", "project_view", "blog_view", "link_click"]),
+  type: z.enum([
+    "page_view",
+    "section_view",
+    "button_click",
+    "resume_download",
+    "project_view",
+    "link_click",
+  ]),
   label: z.string().min(1).max(200),
   metadata: z.record(z.string()).optional(),
   userAgent: z.string().optional(),
@@ -14,13 +24,13 @@ const insertAnalyticsEventSchema = z.object({
 
 export async function registerRoutes(
   httpServer: Server,
-  app: Express
+  app: Express,
 ): Promise<Server> {
   // Contact form submission endpoint
   app.post("/api/contact", async (req, res) => {
     try {
       const validatedData = insertContactMessageSchema.parse(req.body);
-      
+
       // Basic email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(validatedData.email)) {
@@ -28,7 +38,28 @@ export async function registerRoutes(
       }
 
       const message = await storage.createContactMessage(validatedData);
-      
+
+      const { data, error } = await resend.emails.send({
+        from: "Portfolio <onboarding@resend.dev>",
+        to: ["srijonmitra49@gmail.com"],
+        replyTo: validatedData.email,
+        subject: `Portfolio Contact: ${validatedData.subject}`,
+        text: `
+Name: ${validatedData.name}
+Email: ${validatedData.email}
+
+Message:
+${validatedData.message}
+  `,
+      });
+
+      if (error) {
+        console.error("Resend email error:", error);
+        return res.status(500).json({
+          error: "Failed to send email",
+        });
+      }
+
       return res.status(201).json({
         success: true,
         message: "Message sent successfully",
@@ -62,7 +93,9 @@ export async function registerRoutes(
       return res.status(201).json({ success: true, id: event.id });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json({ error: "Validation error", details: error.errors });
+        return res
+          .status(400)
+          .json({ error: "Validation error", details: error.errors });
       }
       return res.status(500).json({ error: "Internal server error" });
     }

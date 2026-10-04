@@ -24,15 +24,27 @@ import {
   Send,
   Linkedin,
   Github,
-  Instagram,
   Loader2,
+  Code2,
 } from "lucide-react";
 
 const contactFormSchema = insertContactMessageSchema.extend({
-  email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
-  name: z.string().min(1, "Name is required").min(2, "Name must be at least 2 characters"),
-  subject: z.string().min(1, "Subject is required").min(3, "Subject must be at least 3 characters"),
-  message: z.string().min(1, "Message is required").min(10, "Message must be at least 10 characters"),
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Please enter a valid email address"),
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .min(2, "Name must be at least 2 characters"),
+  subject: z
+    .string()
+    .min(1, "Subject is required")
+    .min(3, "Subject must be at least 3 characters"),
+  message: z
+    .string()
+    .min(1, "Message is required")
+    .min(10, "Message must be at least 10 characters"),
 });
 
 type ContactFormValues = z.infer<typeof contactFormSchema>;
@@ -62,18 +74,19 @@ export function ContactSection() {
       form.reset();
     },
     onError: (error: Error) => {
-      let errorMessage = "Please try again later or contact me directly via email.";
-      
+      let errorMessage =
+        "Please try again later or contact me directly via email.";
+
       if (error instanceof ApiError) {
         if (error.details && error.details.length > 0) {
-          errorMessage = error.details.map(d => d.message).join(". ");
+          errorMessage = error.details.map((d) => d.message).join(". ");
         } else if (error.message) {
           errorMessage = error.message;
         }
       } else if (error.message) {
         errorMessage = error.message;
       }
-      
+
       toast({
         title: "Failed to send message",
         description: errorMessage,
@@ -90,25 +103,37 @@ export function ContactSection() {
     <section
       id="contact"
       className="py-20 md:py-28 px-6 md:px-12 lg:px-16 bg-card/30"
+      data-testid="section-contact"
     >
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl md:text-4xl font-semibold text-foreground mb-4">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2
+            className="font-heading text-3xl md:text-4xl font-semibold text-foreground mb-4"
+            data-testid="text-contact-title"
+          >
             Get In Touch
           </h2>
+
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Have a question or want to work together? Feel free to reach out!
+            Interested in connecting or discussing an opportunity? Feel free to
+            reach out.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+          {/* Contact Form */}
           <Card>
             <CardContent className="p-6 md:p-8">
               <h3 className="font-heading text-xl font-semibold text-foreground mb-6">
                 Send a Message
               </h3>
+
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-5"
+                >
                   <FormField
                     control={form.control}
                     name="name"
@@ -154,7 +179,7 @@ export function ContactSection() {
                         <FormLabel>Subject</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="What's this about?"
+                            placeholder="Subject"
                             {...field}
                             data-testid="input-contact-subject"
                           />
@@ -208,12 +233,14 @@ export function ContactSection() {
             </CardContent>
           </Card>
 
+          {/* Contact Details */}
           <div className="space-y-6">
             <Card>
               <CardContent className="p-6 md:p-8">
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-6">
                   Contact Information
                 </h3>
+
                 <div className="space-y-4">
                   {socialLinks.email && (
                     <a
@@ -224,11 +251,13 @@ export function ContactSection() {
                       <div className="p-2 rounded-md bg-primary/10">
                         <Mail className="h-5 w-5 text-primary" />
                       </div>
+
                       <div>
                         <p className="text-sm font-medium text-foreground">
                           Email
                         </p>
-                        <p className="text-sm text-muted-foreground" data-testid="text-email-value">
+
+                        <p className="text-sm text-muted-foreground">
                           {socialLinks.email}
                         </p>
                       </div>
@@ -244,11 +273,13 @@ export function ContactSection() {
                       <div className="p-2 rounded-md bg-primary/10">
                         <Phone className="h-5 w-5 text-primary" />
                       </div>
+
                       <div>
                         <p className="text-sm font-medium text-foreground">
                           Phone
                         </p>
-                        <p className="text-sm text-muted-foreground" data-testid="text-phone-value">
+
+                        <p className="text-sm text-muted-foreground">
                           {socialLinks.phone}
                         </p>
                       </div>
@@ -258,53 +289,58 @@ export function ContactSection() {
               </CardContent>
             </Card>
 
+            {/* Developer Profiles */}
             <Card>
               <CardContent className="p-6 md:p-8">
                 <h3 className="font-heading text-xl font-semibold text-foreground mb-6">
-                  Social Profiles
+                  Developer Profiles
                 </h3>
-                <div className="grid grid-cols-3 gap-4">
-                  {socialLinks.linkedin && (
-                    <a
-                      href={socialLinks.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex flex-col items-center gap-2 p-4 rounded-lg bg-accent/50 hover-elevate transition-all overflow-visible"
-                      data-testid="link-social-linkedin"
-                    >
-                      <Linkedin className="h-6 w-6 text-foreground" />
-                      <span className="text-xs text-muted-foreground">
-                        LinkedIn
-                      </span>
-                    </a>
-                  )}
 
+                <div className="grid grid-cols-3 gap-3">
                   {socialLinks.github && (
                     <a
                       href={socialLinks.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex flex-col items-center gap-2 p-4 rounded-lg bg-accent/50 hover-elevate transition-all overflow-visible"
+                      className="group flex flex-col items-center gap-2 p-4 rounded-lg border border-border bg-accent/30 hover:bg-primary/10 hover:border-primary/30 transition-all"
                       data-testid="link-social-github"
                     >
-                      <Github className="h-6 w-6 text-foreground" />
-                      <span className="text-xs text-muted-foreground">
+                      <Github className="h-6 w-6 text-foreground group-hover:text-primary transition-colors" />
+
+                      <span className="text-xs text-muted-foreground group-hover:text-foreground">
                         GitHub
                       </span>
                     </a>
                   )}
 
-                  {socialLinks.instagram && (
+                  {socialLinks.linkedin && (
                     <a
-                      href={socialLinks.instagram}
+                      href={socialLinks.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex flex-col items-center gap-2 p-4 rounded-lg bg-accent/50 hover-elevate transition-all overflow-visible"
-                      data-testid="link-social-instagram"
+                      className="group flex flex-col items-center gap-2 p-4 rounded-lg border border-border bg-accent/30 hover:bg-primary/10 hover:border-primary/30 transition-all"
+                      data-testid="link-social-linkedin"
                     >
-                      <Instagram className="h-6 w-6 text-foreground" />
-                      <span className="text-xs text-muted-foreground">
-                        Instagram
+                      <Linkedin className="h-6 w-6 text-foreground group-hover:text-primary transition-colors" />
+
+                      <span className="text-xs text-muted-foreground group-hover:text-foreground">
+                        LinkedIn
+                      </span>
+                    </a>
+                  )}
+
+                  {socialLinks.leetcode && (
+                    <a
+                      href={socialLinks.leetcode}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex flex-col items-center gap-2 p-4 rounded-lg border border-border bg-accent/30 hover:bg-primary/10 hover:border-primary/30 transition-all"
+                      data-testid="link-social-leetcode"
+                    >
+                      <Code2 className="h-6 w-6 text-foreground group-hover:text-primary transition-colors" />
+
+                      <span className="text-xs text-muted-foreground group-hover:text-foreground">
+                        LeetCode
                       </span>
                     </a>
                   )}

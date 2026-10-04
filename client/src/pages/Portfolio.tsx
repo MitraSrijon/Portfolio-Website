@@ -5,7 +5,6 @@ import { ExperienceSection } from "@/components/ExperienceSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { CertificationsSection } from "@/components/CertificationsSection";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
-import { BlogSection } from "@/components/BlogSection";
 import { ContactSection } from "@/components/ContactSection";
 import { Footer } from "@/components/Footer";
 import { useSectionTracking } from "@/lib/useSectionTracking";
@@ -21,9 +20,9 @@ export default function Portfolio() {
       >
         Skip to main content
       </a>
-      
+
       <Navigation />
-      
+
       <main id="main-content">
         <HeroSection />
         <AboutSection />
@@ -31,10 +30,9 @@ export default function Portfolio() {
         <ProjectsSection />
         <CertificationsSection />
         <TestimonialsSection />
-        <BlogSection />
         <ContactSection />
       </main>
-      
+
       <Footer />
     </div>
   );

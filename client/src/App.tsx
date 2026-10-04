@@ -5,18 +5,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/lib/theme";
 import Portfolio from "@/pages/Portfolio";
-import BlogListing from "@/pages/BlogListing";
-import BlogPost from "@/pages/BlogPost";
-import CaseStudy from "@/pages/CaseStudy";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Portfolio} />
-      <Route path="/blog" component={BlogListing} />
-      <Route path="/blog/:slug" component={BlogPost} />
-      <Route path="/case-study/:id" component={CaseStudy} />
       <Route component={NotFound} />
     </Switch>
   );

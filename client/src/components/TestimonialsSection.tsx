@@ -11,43 +11,73 @@ export function TestimonialsSection() {
       data-testid="section-testimonials"
     >
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl md:text-4xl font-semibold text-foreground mb-4" data-testid="text-testimonials-title">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <h2
+            className="font-heading text-3xl md:text-4xl font-semibold text-foreground mb-4"
+            data-testid="text-testimonials-title"
+          >
             Testimonials
           </h2>
+
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             What colleagues and clients have to say
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6" data-testid="testimonials-grid">
+        {/* Testimonials */}
+        <div
+          className="grid md:grid-cols-2 gap-6"
+          data-testid="testimonials-grid"
+        >
           {testimonials.map((testimonial) => (
             <Card
               key={testimonial.id}
               className="hover-elevate transition-all duration-300 overflow-visible"
               data-testid={`card-testimonial-${testimonial.id}`}
             >
-              <CardContent className="p-6 md:p-8">
-                <div className="mb-4">
+              <CardContent className="p-6 md:p-8 flex flex-col h-full">
+                {/* Quote Icon */}
+                <div className="mb-5">
                   <Quote className="h-8 w-8 text-primary/30" />
                 </div>
-                
-                <blockquote className="text-muted-foreground leading-relaxed mb-6" data-testid={`text-testimonial-quote-${testimonial.id}`}>
+
+                {/* Testimonial */}
+                <blockquote
+                  className="text-muted-foreground leading-relaxed text-sm md:text-base mb-8 flex-1"
+                  data-testid={`text-testimonial-quote-${testimonial.id}`}
+                >
                   "{testimonial.quote}"
                 </blockquote>
-                
-                <div className="flex items-center gap-4">
-                  <Avatar className="h-12 w-12" data-testid={`avatar-testimonial-${testimonial.id}`}>
+
+                {/* Person */}
+                <div className="flex items-center gap-4 pt-5 border-t border-border">
+                  <Avatar
+                    className="h-12 w-12"
+                    data-testid={`avatar-testimonial-${testimonial.id}`}
+                  >
                     <AvatarFallback className="bg-primary/10 text-foreground text-sm font-medium">
-                      {testimonial.name.split(" ").map(n => n[0]).join("")}
+                      {testimonial.name
+                        .split(" ")
+                        .map((name) => name[0])
+                        .join("")}
                     </AvatarFallback>
                   </Avatar>
+
                   <div>
-                    <p className="font-medium text-foreground" data-testid={`text-testimonial-name-${testimonial.id}`}>
+                    <p
+                      className="font-medium text-foreground"
+                      data-testid={`text-testimonial-name-${testimonial.id}`}
+                    >
                       {testimonial.name}
                     </p>
-                    <p className="text-sm text-muted-foreground" data-testid={`text-testimonial-role-${testimonial.id}`}>
-                      {testimonial.role} at {testimonial.company}
+
+                    <p
+                      className="text-sm text-muted-foreground"
+                      data-testid={`text-testimonial-role-${testimonial.id}`}
+                    >
+                      {testimonial.role}
+                      {testimonial.company ? ` • ${testimonial.company}` : ""}
                     </p>
                   </div>
                 </div>

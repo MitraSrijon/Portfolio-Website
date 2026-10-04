@@ -1,7 +1,14 @@
 import { useEffect } from "react";
 import { useAnalytics } from "./useAnalytics";
 
-const TRACKED_SECTIONS = ["about", "experience", "projects", "certifications", "testimonials", "blog", "contact"];
+const TRACKED_SECTIONS = [
+  "about",
+  "experience",
+  "projects",
+  "certifications",
+  "testimonials",
+  "contact",
+];
 
 export function useSectionTracking() {
   const { trackSectionView } = useAnalytics();
@@ -19,7 +26,7 @@ export function useSectionTracking() {
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     TRACKED_SECTIONS.forEach((id) => {

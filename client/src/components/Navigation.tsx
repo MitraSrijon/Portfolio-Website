@@ -12,7 +12,6 @@ const navItems = [
   { label: "Projects", href: "#projects" },
   { label: "Certifications", href: "#certifications" },
   { label: "Testimonials", href: "#testimonials" },
-  { label: "Blog", href: "#blog" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -98,7 +97,11 @@ export function Navigation() {
               size="icon"
               onClick={toggleTheme}
               className="text-muted-foreground"
-              aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+              aria-label={
+                theme === "light"
+                  ? "Switch to dark mode"
+                  : "Switch to light mode"
+              }
               data-testid="button-theme-toggle"
             >
               {theme === "light" ? (

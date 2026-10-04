@@ -1,6 +1,12 @@
 import { useCallback } from "react";
 
-type EventType = "page_view" | "section_view" | "button_click" | "resume_download" | "project_view" | "blog_view" | "link_click";
+type EventType =
+  | "page_view"
+  | "section_view"
+  | "button_click"
+  | "resume_download"
+  | "project_view"
+  | "link_click";
 
 interface TrackOptions {
   label: string;
@@ -25,17 +31,23 @@ async function sendEvent(type: EventType, options: TrackOptions) {
 }
 
 export function useAnalytics() {
-  const trackPageView = useCallback((label: string, metadata?: Record<string, string>) => {
-    sendEvent("page_view", { label, metadata });
-  }, []);
+  const trackPageView = useCallback(
+    (label: string, metadata?: Record<string, string>) => {
+      sendEvent("page_view", { label, metadata });
+    },
+    [],
+  );
 
   const trackSectionView = useCallback((section: string) => {
     sendEvent("section_view", { label: section });
   }, []);
 
-  const trackButtonClick = useCallback((button: string, metadata?: Record<string, string>) => {
-    sendEvent("button_click", { label: button, metadata });
-  }, []);
+  const trackButtonClick = useCallback(
+    (button: string, metadata?: Record<string, string>) => {
+      sendEvent("button_click", { label: button, metadata });
+    },
+    [],
+  );
 
   const trackResumeDownload = useCallback(() => {
     sendEvent("resume_download", { label: "resume_pdf" });
@@ -43,10 +55,6 @@ export function useAnalytics() {
 
   const trackProjectView = useCallback((projectTitle: string) => {
     sendEvent("project_view", { label: projectTitle });
-  }, []);
-
-  const trackBlogView = useCallback((postTitle: string) => {
-    sendEvent("blog_view", { label: postTitle });
   }, []);
 
   const trackLinkClick = useCallback((label: string, url?: string) => {
@@ -59,7 +67,6 @@ export function useAnalytics() {
     trackButtonClick,
     trackResumeDownload,
     trackProjectView,
-    trackBlogView,
     trackLinkClick,
   };
 }

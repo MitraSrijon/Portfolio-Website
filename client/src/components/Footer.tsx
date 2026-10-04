@@ -1,25 +1,34 @@
 import { personalInfo, socialLinks } from "@/data/portfolio";
-import { Linkedin, Github, Instagram, Heart } from "lucide-react";
+import { Linkedin, Github, Code2, Heart } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-8 px-6 md:px-12 lg:px-16 border-t border-border" data-testid="footer">
+    <footer
+      className="py-8 px-6 md:px-12 lg:px-16 border-t border-border"
+      data-testid="footer"
+    >
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-1 text-sm text-muted-foreground" data-testid="text-copyright">
+          {/* Copyright */}
+          <div
+            className="flex items-center gap-1 text-sm text-muted-foreground"
+            data-testid="text-copyright"
+          >
             <span>&copy; {currentYear}</span>
             <span>{personalInfo.name}.</span>
             <span className="hidden sm:inline">All rights reserved.</span>
           </div>
 
+          {/* Built With */}
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
-            <span>Made with</span>
+            <span>Built with</span>
             <Heart className="h-4 w-4 text-destructive fill-destructive" />
             <span>and code</span>
           </div>
 
+          {/* Developer Profiles */}
           <div className="flex items-center gap-3">
             {socialLinks.linkedin && (
               <a
@@ -33,6 +42,7 @@ export function Footer() {
                 <Linkedin className="h-5 w-5" />
               </a>
             )}
+
             {socialLinks.github && (
               <a
                 href={socialLinks.github}
@@ -45,16 +55,17 @@ export function Footer() {
                 <Github className="h-5 w-5" />
               </a>
             )}
-            {socialLinks.instagram && (
+
+            {socialLinks.leetcode && (
               <a
-                href={socialLinks.instagram}
+                href={socialLinks.leetcode}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Instagram"
-                data-testid="link-footer-instagram"
+                aria-label="LeetCode"
+                data-testid="link-footer-leetcode"
               >
-                <Instagram className="h-5 w-5" />
+                <Code2 className="h-5 w-5" />
               </a>
             )}
           </div>
