@@ -32,9 +32,9 @@ export function HeroSection() {
     >
       <div className="max-w-6xl mx-auto">
         {/* LEFT + RIGHT */}
-        <div className="flex flex-row items-center min-h-[65vh]">
+        <div className="flex flex-col-reverse md:flex-row items-center min-h-[65vh] gap-8">
           {/* LEFT SIDE */}
-          <div className="w-[60%] text-left">
+          <div className="w-full md:w-[60%] text-center md:text-left">
             <p
               className="text-muted-foreground text-base md:text-lg font-medium mb-2"
               data-testid="text-greeting"
@@ -56,14 +56,14 @@ export function HeroSection() {
               Software Engineer
             </h2>
 
-            <div className="flex flex-wrap gap-3 mt-8">
+            <div className="flex flex-col md:flex-row gap-3 mt-8 items-center md:items-start">
               <Button
                 size="lg"
                 onClick={() => {
                   trackButtonClick("view_projects");
                   scrollToSection("projects");
                 }}
-                className="gap-2"
+                className="w-full sm:w-auto"
                 data-testid="button-view-projects"
               >
                 <FolderOpen className="h-4 w-4" />
@@ -77,7 +77,7 @@ export function HeroSection() {
                   trackButtonClick("contact_me");
                   scrollToSection("contact");
                 }}
-                className="gap-2"
+                className="w-full sm:w-auto"
                 data-testid="button-contact-me"
               >
                 <Mail className="h-4 w-4" />
@@ -88,7 +88,7 @@ export function HeroSection() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="gap-2"
+                className="w-full sm:w-auto"
                 data-testid="button-download-resume"
               >
                 <a
@@ -105,7 +105,7 @@ export function HeroSection() {
           </div>
 
           {/* RIGHT SIDE - PROFILE PHOTO */}
-          <div className="w-[40%] flex justify-center">
+          <div className="w-full md:w-[40%] flex justify-center">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full blur-3xl scale-110" />
 
